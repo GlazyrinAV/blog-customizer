@@ -9,6 +9,7 @@ import { Select } from 'src/ui/select';
 import {
 	backgroundColors,
 	contentWidthArr,
+	defaultArticleState,
 	fontColors,
 	fontFamilyOptions,
 	fontSizeOptions,
@@ -16,14 +17,25 @@ import {
 } from 'src/constants/articleProps';
 import { RadioGroup } from 'src/ui/radio-group';
 import { Separator } from 'src/ui/separator';
+import { ArticleFormProps } from 'src/index';
 
-export const ArticleParamsForm = () => {
+type ArticleParamsFormProps = {
+	onApply: (options: ArticleFormProps) => void;
+	onReset: () => void;
+};
+
+export const ArticleParamsForm = (props: ArticleParamsFormProps) => {
 	const [isOpen, setIsOpen] = useState(false);
-	const [font, setFont] = useState(fontFamilyOptions[0]);
-	const [fontSize, setFontSize] = useState(fontSizeOptions[0]);
-	const [fontColor, setFontColor] = useState(fontColors[0]);
-	const [backgroundColor, setBackgroundColor] = useState(backgroundColors[0]);
-	const [contentWidth, setContentWidth] = useState(contentWidthArr[0]);
+	const [font, setFont] = useState(defaultArticleState.fontFamilyOption);
+	const [fontSize, setFontSize] = useState(defaultArticleState.fontSizeOption);
+	const [fontColor, setFontColor] = useState(defaultArticleState.fontColor);
+	const [backgroundColor, setBackgroundColor] = useState(
+		defaultArticleState.backgroundColor
+	);
+	const [contentWidth, setContentWidth] = useState(
+		defaultArticleState.contentWidth
+	);
+
 	const containerRef = useRef<HTMLDivElement | null>(null);
 
 	const handleopenClick = () => {
@@ -48,6 +60,22 @@ export const ArticleParamsForm = () => {
 
 	const handleContentWidthSelection = (option: OptionType) => {
 		setContentWidth(option);
+	};
+
+	const handleApply = () => {
+		props.onApply({
+			fontFamily: font,
+			fontSize: fontSize,
+			fontColor: fontColor,
+			contentWidth: contentWidth,
+			backgroundColor: backgroundColor,
+		});
+		setIsOpen(false);
+	};
+
+	const handleReset = () => {
+		props.onReset();
+		setIsOpen(false);
 	};
 
 	return (
@@ -93,8 +121,18 @@ export const ArticleParamsForm = () => {
 						onChange={handleContentWidthSelection}
 					/>
 					<div className={styles.bottomContainer}>
-						<Button title='Сбросить' htmlType='reset' type='clear' />
-						<Button title='Применить' htmlType='submit' type='apply' />
+						<Button
+							title='Сбросить'
+							htmlType='reset'
+							type='clear'
+							onClick={handleReset}
+						/>
+						<Button
+							title='Применить'
+							htmlType='submit'
+							type='apply'
+							onClick={handleApply}
+						/>
 					</div>
 				</form>
 			</aside>
