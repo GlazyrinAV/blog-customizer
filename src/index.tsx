@@ -1,11 +1,5 @@
 import { createRoot } from 'react-dom/client';
-import {
-	StrictMode,
-	CSSProperties,
-	useState,
-	useLayoutEffect,
-	useRef,
-} from 'react';
+import { StrictMode, CSSProperties, useState, useRef } from 'react';
 import clsx from 'clsx';
 
 import { Article } from './components/article/Article';
@@ -28,6 +22,7 @@ export type ArticleFormProps = {
 
 const App = () => {
 	const mainRef = useRef<HTMLDivElement | null>(null);
+
 	const [state, setState] = useState({
 		fontFamily: defaultArticleState.fontFamilyOption,
 		fontSize: defaultArticleState.fontSizeOption,
@@ -37,6 +32,7 @@ const App = () => {
 	});
 
 	const handleApply = (options: ArticleFormProps) => {
+		mainRef.current?.style;
 		setState(options);
 	};
 
@@ -49,15 +45,6 @@ const App = () => {
 			backgroundColor: defaultArticleState.backgroundColor,
 		});
 	};
-
-	useLayoutEffect(() => {
-		if (mainRef.current) {
-			mainRef.current.style.setProperty(
-				'--font-family',
-				state.fontFamily.value
-			);
-		}
-	}, [state]);
 
 	return (
 		<main

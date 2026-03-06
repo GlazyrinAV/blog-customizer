@@ -84,12 +84,10 @@ export const ArticleParamsForm = (props: ArticleParamsFormProps) => {
 			contentWidth: state.contentWidth,
 			backgroundColor: state.backgroundColor,
 		});
-		setIsOpen(false);
 	};
 
 	const handleReset = () => {
 		props.onReset();
-		setIsOpen(false);
 	};
 
 	return (
