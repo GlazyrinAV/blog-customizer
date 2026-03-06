@@ -26,15 +26,14 @@ type ArticleParamsFormProps = {
 
 export const ArticleParamsForm = (props: ArticleParamsFormProps) => {
 	const [isOpen, setIsOpen] = useState(false);
-	const [font, setFont] = useState(defaultArticleState.fontFamilyOption);
-	const [fontSize, setFontSize] = useState(defaultArticleState.fontSizeOption);
-	const [fontColor, setFontColor] = useState(defaultArticleState.fontColor);
-	const [backgroundColor, setBackgroundColor] = useState(
-		defaultArticleState.backgroundColor
-	);
-	const [contentWidth, setContentWidth] = useState(
-		defaultArticleState.contentWidth
-	);
+
+	const [state, setState] = useState<ArticleFormProps>({
+		fontFamily: defaultArticleState.fontFamilyOption,
+		fontSize: defaultArticleState.fontSizeOption,
+		fontColor: defaultArticleState.fontColor,
+		contentWidth: defaultArticleState.contentWidth,
+		backgroundColor: defaultArticleState.backgroundColor,
+	});
 
 	const containerRef = useRef<HTMLDivElement | null>(null);
 
@@ -43,32 +42,47 @@ export const ArticleParamsForm = (props: ArticleParamsFormProps) => {
 	};
 
 	const handleFontSelection = (option: OptionType) => {
-		setFont(option);
+		setState({
+			...state,
+			fontFamily: option,
+		});
 	};
 
 	const handleFontSizeSelection = (option: OptionType) => {
-		setFontSize(option);
+		setState({
+			...state,
+			fontSize: option,
+		});
 	};
 
 	const handleFontColorSelection = (option: OptionType) => {
-		setFontColor(option);
+		setState({
+			...state,
+			fontColor: option,
+		});
 	};
 
 	const handleBackgroundColorSelection = (option: OptionType) => {
-		setBackgroundColor(option);
+		setState({
+			...state,
+			backgroundColor: option,
+		});
 	};
 
 	const handleContentWidthSelection = (option: OptionType) => {
-		setContentWidth(option);
+		setState({
+			...state,
+			contentWidth: option,
+		});
 	};
 
 	const handleApply = () => {
 		props.onApply({
-			fontFamily: font,
-			fontSize: fontSize,
-			fontColor: fontColor,
-			contentWidth: contentWidth,
-			backgroundColor: backgroundColor,
+			fontFamily: state.fontFamily,
+			fontSize: state.fontSize,
+			fontColor: state.fontColor,
+			contentWidth: state.contentWidth,
+			backgroundColor: state.backgroundColor,
 		});
 		setIsOpen(false);
 	};
@@ -91,33 +105,33 @@ export const ArticleParamsForm = (props: ArticleParamsFormProps) => {
 					<Select
 						title='шрифт'
 						options={fontFamilyOptions}
-						selected={font}
+						selected={state.fontFamily}
 						onChange={handleFontSelection}
 					/>
 					<RadioGroup
 						title='размер шрифта'
 						options={fontSizeOptions}
 						name='FontSizeSelector'
-						selected={fontSize}
+						selected={state.fontSize}
 						onChange={handleFontSizeSelection}
 					/>
 					<Select
 						title='Цвет шрифта'
 						options={fontColors}
-						selected={fontColor}
+						selected={state.fontColor}
 						onChange={handleFontColorSelection}
 					/>
 					<Separator />
 					<Select
 						title='Цвет фона'
 						options={backgroundColors}
-						selected={backgroundColor}
+						selected={state.backgroundColor}
 						onChange={handleBackgroundColorSelection}
 					/>
 					<Select
 						title='Ширина контента'
 						options={contentWidthArr}
-						selected={contentWidth}
+						selected={state.contentWidth}
 						onChange={handleContentWidthSelection}
 					/>
 					<div className={styles.bottomContainer}>
