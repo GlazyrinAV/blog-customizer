@@ -13,8 +13,8 @@ const domNode = document.getElementById('root') as HTMLDivElement;
 const root = createRoot(domNode);
 
 export type ArticleFormProps = {
-	fontFamily: OptionType;
-	fontSize: OptionType;
+	fontFamilyOption: OptionType;
+	fontSizeOption: OptionType;
 	fontColor: OptionType;
 	contentWidth: OptionType;
 	backgroundColor: OptionType;
@@ -24,22 +24,21 @@ const App = () => {
 	const mainRef = useRef<HTMLDivElement | null>(null);
 
 	const [state, setState] = useState({
-		fontFamily: defaultArticleState.fontFamilyOption,
-		fontSize: defaultArticleState.fontSizeOption,
+		fontFamilyOption: defaultArticleState.fontFamilyOption,
+		fontSizeOption: defaultArticleState.fontSizeOption,
 		fontColor: defaultArticleState.fontColor,
 		contentWidth: defaultArticleState.contentWidth,
 		backgroundColor: defaultArticleState.backgroundColor,
 	});
 
 	const handleApply = (options: ArticleFormProps) => {
-		mainRef.current?.style;
 		setState(options);
 	};
 
 	const handleReset = () => {
 		setState({
-			fontFamily: defaultArticleState.fontFamilyOption,
-			fontSize: defaultArticleState.fontSizeOption,
+			fontFamilyOption: defaultArticleState.fontFamilyOption,
+			fontSizeOption: defaultArticleState.fontSizeOption,
 			fontColor: defaultArticleState.fontColor,
 			contentWidth: defaultArticleState.contentWidth,
 			backgroundColor: defaultArticleState.backgroundColor,
@@ -52,8 +51,8 @@ const App = () => {
 			className={clsx(styles.main)}
 			style={
 				{
-					'--font-family': state.fontFamily.value,
-					'--font-size': state.fontSize.value,
+					'--font-family': state.fontFamilyOption.value,
+					'--font-size': state.fontSizeOption.value,
 					'--font-color': state.fontColor.value,
 					'--container-width': state.contentWidth.value,
 					'--bg-color': state.backgroundColor.value,

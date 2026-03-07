@@ -28,8 +28,8 @@ export const ArticleParamsForm = (props: ArticleParamsFormProps) => {
 	const [isOpen, setIsOpen] = useState(false);
 
 	const [state, setState] = useState<ArticleFormProps>({
-		fontFamily: defaultArticleState.fontFamilyOption,
-		fontSize: defaultArticleState.fontSizeOption,
+		fontFamilyOption: defaultArticleState.fontFamilyOption,
+		fontSizeOption: defaultArticleState.fontSizeOption,
 		fontColor: defaultArticleState.fontColor,
 		contentWidth: defaultArticleState.contentWidth,
 		backgroundColor: defaultArticleState.backgroundColor,
@@ -44,14 +44,14 @@ export const ArticleParamsForm = (props: ArticleParamsFormProps) => {
 	const handleFontSelection = (option: OptionType) => {
 		setState({
 			...state,
-			fontFamily: option,
+			fontFamilyOption: option,
 		});
 	};
 
 	const handleFontSizeSelection = (option: OptionType) => {
 		setState({
 			...state,
-			fontSize: option,
+			fontSizeOption: option,
 		});
 	};
 
@@ -77,13 +77,7 @@ export const ArticleParamsForm = (props: ArticleParamsFormProps) => {
 	};
 
 	const handleApply = () => {
-		props.onApply({
-			fontFamily: state.fontFamily,
-			fontSize: state.fontSize,
-			fontColor: state.fontColor,
-			contentWidth: state.contentWidth,
-			backgroundColor: state.backgroundColor,
-		});
+		props.onApply(state);
 	};
 
 	const handleReset = () => {
@@ -103,14 +97,14 @@ export const ArticleParamsForm = (props: ArticleParamsFormProps) => {
 					<Select
 						title='шрифт'
 						options={fontFamilyOptions}
-						selected={state.fontFamily}
+						selected={state.fontFamilyOption}
 						onChange={handleFontSelection}
 					/>
 					<RadioGroup
 						title='размер шрифта'
 						options={fontSizeOptions}
 						name='FontSizeSelector'
-						selected={state.fontSize}
+						selected={state.fontSizeOption}
 						onChange={handleFontSizeSelection}
 					/>
 					<Select
@@ -141,7 +135,7 @@ export const ArticleParamsForm = (props: ArticleParamsFormProps) => {
 						/>
 						<Button
 							title='Применить'
-							htmlType='submit'
+							htmlType='button'
 							type='apply'
 							onClick={handleApply}
 						/>
