@@ -1,11 +1,11 @@
 import { CSSProperties, useState, useRef } from 'react';
 import clsx from 'clsx';
 
-import '../../styles/index.scss';
-import styles from '../../styles/index.module.scss';
+import './styles/index.scss';
+import styles from './styles/index.module.scss';
 import { OptionType, defaultArticleState } from 'src/constants/articleProps';
-import { Article } from '../article';
-import { ArticleParamsForm } from '../article-params-form';
+import { Article } from './components/article';
+import { ArticleParamsForm } from './components/article-params-form';
 
 export type ArticleFormProps = {
 	fontFamilyOption: OptionType;
