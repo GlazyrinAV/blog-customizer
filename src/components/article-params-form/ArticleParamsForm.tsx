@@ -17,7 +17,7 @@ import {
 } from 'src/constants/articleProps';
 import { RadioGroup } from 'src/ui/radio-group';
 import { Separator } from 'src/ui/separator';
-import { ArticleFormProps } from 'src/components/api/Api';
+import { ArticleFormProps } from 'src/components/app/App';
 import { useOutsideClickClose } from '../hooks/useOutsideClickClose';
 
 type ArticleParamsFormProps = {
