@@ -17,7 +17,8 @@ import {
 } from 'src/constants/articleProps';
 import { RadioGroup } from 'src/ui/radio-group';
 import { Separator } from 'src/ui/separator';
-import { ArticleFormProps } from 'src/index';
+import { ArticleFormProps } from 'src/components/api/Api';
+import { useOutsideClickClose } from 'src/ui/select/hooks/useOutsideClickClose';
 
 type ArticleParamsFormProps = {
 	onApply: (options: ArticleFormProps) => void;
@@ -37,7 +38,7 @@ export const ArticleParamsForm = (props: ArticleParamsFormProps) => {
 
 	const containerRef = useRef<HTMLDivElement | null>(null);
 
-	const handleopenClick = () => {
+	const handleOpenClick = () => {
 		setIsOpen(!isOpen);
 	};
 
@@ -84,9 +85,15 @@ export const ArticleParamsForm = (props: ArticleParamsFormProps) => {
 		props.onReset();
 	};
 
+	useOutsideClickClose({
+		isOpen,
+		rootRef: containerRef,
+		onChange: setIsOpen,
+	});
+
 	return (
 		<>
-			<ArrowButton isOpen={isOpen} onClick={handleopenClick} />
+			<ArrowButton isOpen={isOpen} onClick={handleOpenClick} />
 			<aside
 				ref={containerRef}
 				className={clsx(styles.container, { [styles.container_open]: isOpen })}>
