@@ -18,7 +18,7 @@ import {
 import { RadioGroup } from 'src/ui/radio-group';
 import { Separator } from 'src/ui/separator';
 import { ArticleFormProps } from 'src/components/api/Api';
-import { useOutsideClickClose } from 'src/ui/select/hooks/useOutsideClickClose';
+import { useOutsideClickClose } from '../hooks/useOutsideClickClose';
 
 type ArticleParamsFormProps = {
 	onApply: (options: ArticleFormProps) => void;
