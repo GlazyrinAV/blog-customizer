@@ -1,11 +1,10 @@
 import { CSSProperties, useState, useRef } from 'react';
-import clsx from 'clsx';
 
-import './styles/index.scss';
-import styles from './styles/index.module.scss';
+import '../../styles/index.scss';
+import styles from '../../styles/index.module.scss';
 import { OptionType, defaultArticleState } from 'src/constants/articleProps';
-import { Article } from './components/article';
-import { ArticleParamsForm } from './components/article-params-form';
+import { Article } from '../article';
+import { ArticleParamsForm } from '../article-params-form';
 
 export type ArticleFormProps = {
 	fontFamilyOption: OptionType;
@@ -18,7 +17,7 @@ export type ArticleFormProps = {
 export const App = () => {
 	const mainRef = useRef<HTMLDivElement | null>(null);
 
-	const [state, setState] = useState({
+	const [currentArticleState, setCurrentArticleState] = useState({
 		fontFamilyOption: defaultArticleState.fontFamilyOption,
 		fontSizeOption: defaultArticleState.fontSizeOption,
 		fontColor: defaultArticleState.fontColor,
@@ -27,11 +26,11 @@ export const App = () => {
 	});
 
 	const handleApply = (options: ArticleFormProps) => {
-		setState(options);
+		setCurrentArticleState(options);
 	};
 
 	const handleReset = () => {
-		setState({
+		setCurrentArticleState({
 			fontFamilyOption: defaultArticleState.fontFamilyOption,
 			fontSizeOption: defaultArticleState.fontSizeOption,
 			fontColor: defaultArticleState.fontColor,
@@ -43,17 +42,21 @@ export const App = () => {
 	return (
 		<main
 			ref={mainRef}
-			className={clsx(styles.main)}
+			className={styles.main}
 			style={
 				{
-					'--font-family': state.fontFamilyOption.value,
-					'--font-size': state.fontSizeOption.value,
-					'--font-color': state.fontColor.value,
-					'--container-width': state.contentWidth.value,
-					'--bg-color': state.backgroundColor.value,
+					'--font-family': currentArticleState.fontFamilyOption.value,
+					'--font-size': currentArticleState.fontSizeOption.value,
+					'--font-color': currentArticleState.fontColor.value,
+					'--container-width': currentArticleState.contentWidth.value,
+					'--bg-color': currentArticleState.backgroundColor.value,
 				} as CSSProperties
 			}>
-			<ArticleParamsForm onApply={handleApply} onReset={handleReset} />
+			<ArticleParamsForm
+				onApply={handleApply}
+				onReset={handleReset}
+				currentArticleState={currentArticleState}
+			/>
 			<Article />
 		</main>
 	);

@@ -7,7 +7,7 @@ type UseOutsideClickClose = {
 	rootRef: React.RefObject<HTMLDivElement>;
 };
 
-export const useOutsideClickClose = ({
+export const useOutsideClickCloseOrEsc = ({
 	isOpen,
 	rootRef,
 	onClose,
@@ -15,17 +15,37 @@ export const useOutsideClickClose = ({
 }: UseOutsideClickClose) => {
 	useEffect(() => {
 		const handleClick = (event: MouseEvent) => {
-			const { target } = event;
-			if (target instanceof Node && !rootRef.current?.contains(target)) {
-				isOpen && onClose?.();
-				onChange?.(false);
+			if (isOpen) {
+				const { target } = event;
+				if (target instanceof Node && !rootRef.current?.contains(target)) {
+					onClose?.();
+					onChange?.(false);
+				}
+			} else {
+				return;
 			}
 		};
 
-		window.addEventListener('mousedown', handleClick);
+		const handleKeyDown = (event: KeyboardEvent) => {
+			if (isOpen && event.key === 'Escape') {
+				onClose?.();
+				onChange?.(false);
+			} else {
+				return;
+			}
+		};
+
+		if (isOpen) {
+			window.addEventListener('mousedown', handleClick);
+			window.addEventListener('keydown', handleKeyDown);
+		} else {
+			window.removeEventListener('mousedown', handleClick);
+			window.removeEventListener('keydown', handleKeyDown);
+		}
 
 		return () => {
 			window.removeEventListener('mousedown', handleClick);
+			window.removeEventListener('keydown', handleKeyDown);
 		};
 	}, [onClose, onChange, isOpen]);
 };
