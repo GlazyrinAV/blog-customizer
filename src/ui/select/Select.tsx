@@ -7,7 +7,7 @@ import arrowDown from 'src/images/arrow-down.svg';
 import { Option } from './Option';
 import { isFontFamilyClass } from './helpers/isFontFamilyClass';
 import { useEnterSubmit } from './hooks/useEnterSubmit';
-import { useOutsideClickClose } from './hooks/useOutsideClickClose';
+import { useOutsideClickCloseOrEsc } from '../../components/hooks/useOutsideClickClose';
 
 import styles from './Select.module.scss';
 
@@ -27,7 +27,7 @@ export const Select = (props: SelectProps) => {
 	const placeholderRef = useRef<HTMLDivElement>(null);
 	const optionClassName = selected?.optionClassName ?? '';
 
-	useOutsideClickClose({
+	useOutsideClickCloseOrEsc({
 		isOpen,
 		rootRef,
 		onClose,
